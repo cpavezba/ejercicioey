@@ -1,8 +1,14 @@
 
 spring:
+  jpa:
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+        globally_quoted_identifiers_skip_column_definitions: true
   dataSource:
     url: jdbc:h2:mem:testey
     driverClassName: org.h2.Driver
     username: sa
     password:
     database-platform: org.hibernate.dialect.H2Dialect
+

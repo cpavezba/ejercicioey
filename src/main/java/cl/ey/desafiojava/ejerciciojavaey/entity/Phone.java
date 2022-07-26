@@ -15,11 +15,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Getter
 @Setter
 @Builder
 @Entity
+@Table(name = "\"phone\"")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Phone {
