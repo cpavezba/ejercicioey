@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({InvalidParameterException.class, InvalidPasswordException.class, InvalidEmailException.class})
-    protected ResponseEntity<Object> handleBadRequestException(InvalidParameterException ex) {
+    protected ResponseEntity<Object> handleBadRequestException(Exception ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(MessageResponse.builder().message(ex.getMessage()).build());
