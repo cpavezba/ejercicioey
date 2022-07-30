@@ -1,6 +1,8 @@
 package cl.ey.desafiojava.ejerciciojavaey.controller;
 
+import cl.ey.desafiojava.ejerciciojavaey.exception.InvalidEmailException;
 import cl.ey.desafiojava.ejerciciojavaey.exception.InvalidParameterException;
+import cl.ey.desafiojava.ejerciciojavaey.exception.InvalidPasswordException;
 import cl.ey.desafiojava.ejerciciojavaey.model.UserDto;
 import cl.ey.desafiojava.ejerciciojavaey.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,8 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDto> addUser(@RequestBody UserDto user) throws InvalidParameterException {
+    public ResponseEntity<UserDto> addUser(@RequestBody UserDto user)
+            throws InvalidParameterException, InvalidEmailException, InvalidPasswordException {
         return userService.addUser(user);
     }
 

@@ -2,7 +2,9 @@ package cl.ey.desafiojava.ejerciciojavaey.service;
 
 import cl.ey.desafiojava.ejerciciojavaey.entity.Phone;
 import cl.ey.desafiojava.ejerciciojavaey.entity.User;
+import cl.ey.desafiojava.ejerciciojavaey.exception.InvalidEmailException;
 import cl.ey.desafiojava.ejerciciojavaey.exception.InvalidParameterException;
+import cl.ey.desafiojava.ejerciciojavaey.exception.InvalidPasswordException;
 import cl.ey.desafiojava.ejerciciojavaey.model.PhoneDto;
 import cl.ey.desafiojava.ejerciciojavaey.model.UserDto;
 import cl.ey.desafiojava.ejerciciojavaey.repository.PhoneRepository;
@@ -29,7 +31,8 @@ public class UserServiceImpl implements UserService {
     private PhoneRepository phoneRepository;
 
     @Override
-    public ResponseEntity<UserDto> addUser(UserDto userDto) throws InvalidParameterException {
+    public ResponseEntity<UserDto> addUser(UserDto userDto)
+            throws InvalidParameterException, InvalidEmailException, InvalidPasswordException {
 
         validateParams(userDto);
 
@@ -80,7 +83,7 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.status(HttpStatus.OK).body(userDtos);
     }
 
-    private void validateParams(UserDto request) throws InvalidParameterException {
+    private void validateParams(UserDto request) throws InvalidParameterException, InvalidEmailException, InvalidPasswordException {
         List<String> errors = new ArrayList<>();
 
         if (request.getEmail() == null || request.getEmail().isEmpty()) {
@@ -98,14 +101,13 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new InvalidParameterException("El correo ya registrado");
         }
-        ;
 
         if (!request.getEmail().matches("^[a-zA-Z0-9._-]+@[a-z]+\\.[a-z]+$")) {
-            throw new InvalidParameterException("El correo no cumple el formato");
+            throw new InvalidEmailException("El correo no cumple el formato");
         }
 
         if (!request.getPassword().matches("^[A-Z]{1}[a-z]+[0-9]{2}$")) {
-            throw new InvalidParameterException("La password no cumple el formato");
+            throw new InvalidPasswordException("La password no cumple el formato");
         }
 
     }
